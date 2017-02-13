@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -13,19 +14,24 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class KukBukApplication extends Application {
 
+    Logger logger = Logger.getLogger(KukBukApplication.class);
+
     public static AnnotationConfigApplicationContext applicationContext;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Group root = new Group();
         Scene scene = new Scene(root, 1024, 800, Color.WHEAT);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public static void main(String[] args) {
         applicationContext = new AnnotationConfigApplicationContext(KukBukConfig.class);
-
         launch(args);
+
     }
+
+
 }

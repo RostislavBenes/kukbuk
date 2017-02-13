@@ -8,7 +8,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.ValidationMode;
 import javax.sql.DataSource;
 import javax.transaction.TransactionManager;
 import java.util.Properties;
@@ -18,6 +20,7 @@ import java.util.Properties;
  */
 @Configuration
 @ComponentScan(basePackageClasses = ScanDao.class)
+@EnableTransactionManagement
 public class KukBukConfig {
 
 
@@ -27,9 +30,12 @@ public class KukBukConfig {
         factoryBean.setDataSource(dataSource());
         factoryBean.setPackagesToScan("cz.rbenes.kukbuk.database.entity");
         factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        factoryBean.setValidationMode(ValidationMode.CALLBACK);
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "validate");
+//        properties.setProperty("hibernate.hbm2ddl.auto", "validate");
         properties.setProperty("hibernate.dialect","com.enigmabridge.hibernate.dialect.SQLiteDialect");
+        properties.setProperty("hibernate.format_sql", "true");
+        properties.setProperty("hibernate.use_sql_comments", "true");
         factoryBean.setJpaProperties(properties);
         return factoryBean;
     }
@@ -38,7 +44,7 @@ public class KukBukConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.sqlite.JDBC");
-        dataSource.setUrl("jdbc:sqlite:/home/rostik/IdeaProjects/kukbuk/kbdb");
+        dataSource.setUrl("jdbc:sqlite:/home/rostik/IdeaProjects/kbdb");
         return dataSource;
     }
 

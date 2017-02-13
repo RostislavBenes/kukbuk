@@ -1,28 +1,31 @@
 package cz.rbenes.kukbuk.database.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by rostik on 4.2.17.
  */
 @Entity
-@Table(name="category")
+@Table(name = "category")
 public class Category implements Serializable{
     @Id
-    private Integer id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
 
+    @NotNull
+    @Size(min=2, max=255)
     private String name;
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -33,4 +36,5 @@ public class Category implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
+
 }
