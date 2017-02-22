@@ -48,7 +48,7 @@ public class TestKukBukConfig extends KukBukConfig {
         factoryBean.setPackagesToScan("cz.rbenes.kukbuk.database.entity");
         factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "validate");
+//        properties.setProperty("hibernate.hbm2ddl.auto", "validate");
         properties.setProperty("hibernate.dialect","org.hibernate.dialect.H2Dialect");
         properties.setProperty("javax.persistence.schema-generation.create-source", "script");
         properties.setProperty("javax.persistence.schema-generation.create-script-source", "/home/rostik/IdeaProjects/kukbuk/scripts/createDb.sql");

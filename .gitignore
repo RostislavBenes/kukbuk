@@ -12,3 +12,6 @@ gen/
 .gradle/
 build/
 bin/
+
+out/
+logKukbuk.log

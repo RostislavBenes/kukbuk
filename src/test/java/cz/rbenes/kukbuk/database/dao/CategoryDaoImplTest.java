@@ -39,6 +39,7 @@ public class CategoryDaoImplTest {
         categoryDao.save(sweaty);
 
         List<Category> cats = categoryDao.getAll();
+        System.out.println("Cas vytvoreni: " + cats.get(0).getCreatedTime());
         Assert.assertEquals(sweaty.getName(), cats.get(0).getName());
     }
 }
