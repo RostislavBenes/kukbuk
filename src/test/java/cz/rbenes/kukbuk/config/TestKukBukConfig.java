@@ -2,6 +2,7 @@ package cz.rbenes.kukbuk.config;
 
 import cz.rbenes.kukbuk.database.dao.ScanDao;
 import cz.rbenes.kukbuk.database.entity.ScanEntity;
+import cz.rbenes.kukbuk.service.ScanService;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +26,7 @@ import java.util.Properties;
  * Created by rostik on 5.2.17.
  */
 @Configuration
-@ComponentScan(basePackageClasses = { ScanDao.class, ScanEntity.class})
+@ComponentScan(basePackageClasses = { ScanDao.class, ScanEntity.class, ScanService.class})
 @EnableTransactionManagement
 public class TestKukBukConfig extends KukBukConfig {
 
@@ -35,7 +36,7 @@ public class TestKukBukConfig extends KukBukConfig {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
                 .setType(EmbeddedDatabaseType.H2)
-                .addScript("db/hsql/create-script.sql")
+                .addScript("db/h2/createDb.sql")
                 .build();
         return  db;
     }
@@ -48,10 +49,10 @@ public class TestKukBukConfig extends KukBukConfig {
         factoryBean.setPackagesToScan("cz.rbenes.kukbuk.database.entity");
         factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         Properties properties = new Properties();
-//        properties.setProperty("hibernate.hbm2ddl.auto", "validate");
+        properties.setProperty("hibernate.hbm2ddl.auto", "validate");
         properties.setProperty("hibernate.dialect","org.hibernate.dialect.H2Dialect");
-        properties.setProperty("javax.persistence.schema-generation.create-source", "script");
-        properties.setProperty("javax.persistence.schema-generation.create-script-source", "/home/rostik/IdeaProjects/kukbuk/scripts/createDb.sql");
+//        properties.setProperty("javax.persistence.schema-generation.create-source", "script");
+//        properties.setProperty("javax.persistence.schema-generation.create-script-source", "db/h2/createDb.sql");
 
         factoryBean.setJpaProperties(properties);
         return factoryBean;

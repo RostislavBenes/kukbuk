@@ -1,14 +1,18 @@
 package cz.rbenes.kukbuk.database.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by rostik on 13.2.17.
  */
+//TODO: pridat typ jidla: maso, vegetarian, vegan. Asi enum
 @Entity
 @Table(name = "recipe")
 @Access(AccessType.FIELD)
@@ -27,18 +31,21 @@ public class Recipe extends BaseEntity {
     @Size(min = 2, max = 5000)
     private String comment;
 
-    @Size(min = 1, max = 255)
+    @Min(0)
+    @Max(255)
     @Column(name = "serving_count")
-    private byte servingCount;
+    private int servingCount;
 
     @Column(name = "preparation_time")
     private Duration preparationTime;
 
-    @Size(min = 0, max = 5)
-    private byte difficulty;
+    @Min(0)
+    @Max(5)
+    private int difficulty;
 
-    @Size(min = 0, max = 5)
-    private byte rating;
+    @Min(0)
+    @Max(5)
+    private int rating;
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private Set<Ingredient> ingredients;
@@ -46,7 +53,23 @@ public class Recipe extends BaseEntity {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private Set<MealImage> mealImages;
 
+    public Recipe() {
+        ingredients = new HashSet<>();
+        mealImages = new HashSet<>();
+    }
 
+    public Recipe(String name, String procedure, String comment, int servingCount, Duration preparationTime,
+                  int difficulty, int rating, Set<Ingredient> ingredients, Set<MealImage> mealImages) {
+        this.name = name;
+        this.procedure = procedure;
+        this.comment = comment;
+        this.servingCount = servingCount;
+        this.preparationTime = preparationTime;
+        this.difficulty = difficulty;
+        this.rating = rating;
+        this.ingredients = ingredients;
+        this.mealImages = mealImages;
+    }
 
     public String getName() {
         return name;
@@ -80,11 +103,11 @@ public class Recipe extends BaseEntity {
         this.comment = comment;
     }
 
-    public byte getServingCount() {
+    public int getServingCount() {
         return servingCount;
     }
 
-    public void setServingCount(byte servingCount) {
+    public void setServingCount(int servingCount) {
         this.servingCount = servingCount;
     }
 
@@ -96,19 +119,19 @@ public class Recipe extends BaseEntity {
         this.preparationTime = preparationTime;
     }
 
-    public byte getDifficulty() {
+    public int getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(byte difficulty) {
+    public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
 
-    public byte getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(byte rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

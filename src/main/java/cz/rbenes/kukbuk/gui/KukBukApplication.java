@@ -1,9 +1,12 @@
 package cz.rbenes.kukbuk.gui;
 
 import cz.rbenes.kukbuk.config.KukBukConfig;
+import cz.rbenes.kukbuk.database.dao.CategoryDao;
+import cz.rbenes.kukbuk.service.CategoryService;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
@@ -20,9 +23,12 @@ public class KukBukApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Group root = new Group();
+        BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 1024, 800, Color.WHEAT);
 
+        CategoryPane categoryPane = new CategoryPane(applicationContext.getBean(CategoryService.class));
+        categoryPane.init();
+        root.setLeft(categoryPane);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

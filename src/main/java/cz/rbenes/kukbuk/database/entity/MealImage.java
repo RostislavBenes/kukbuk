@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 public class MealImage extends BaseEntity {
 
     @NotNull
-    private byte image;
+    private byte[] image;
 
     @Size(min = 2, max = 1000)
     private String description;
@@ -36,11 +36,11 @@ public class MealImage extends BaseEntity {
         this.recipe = recipe;
     }
 
-    public byte getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(byte image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

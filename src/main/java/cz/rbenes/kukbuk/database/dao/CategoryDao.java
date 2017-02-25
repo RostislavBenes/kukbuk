@@ -9,4 +9,8 @@ import java.util.List;
  * Created by rostik on 4.2.17.
  */
 public interface CategoryDao extends GenericDao<Category, Long> {
+
+    List<Category> getAllFetch();
+
+    Category find(String name);
 }
